@@ -51,17 +51,17 @@ const prepareOutputFilename = (filename) => {
 
 const startApp = async () => {
 
-  // Ask if user is ready
+
   const answer = await inquirer.prompt([{
     name: 'start',
     message: 'Hi! Welcome to "Watermark manager". Copy your image files to `/img` folder. Then you\'ll be able to use them in the app. Are you ready?',
     type: 'confirm'
   }]);
 
-  // if answer is no, just quit the app
+
   if (!answer.start) process.exit();
 
-  // ask about input file and watermark type
+
   const options = await inquirer.prompt([{
     name: 'inputImage',
     type: 'input',
@@ -80,12 +80,10 @@ const startApp = async () => {
       message: 'Type your watermark text:',
     }])
     options.watermarkText = text.value;
-    // start
     if (!fs.existsSync('./img/' + options.inputImage)) {
       console.log('Something went wrong... Try again');
       process.exit();
     }
-    //end
     addTextWatermarkToImage('./img/' + options.inputImage, './img/' + prepareOutputFilename(options.inputImage), options.watermarkText);
   }
   else {
@@ -96,12 +94,10 @@ const startApp = async () => {
       default: 'logo.png',
     }])
     options.watermarkImage = image.filename;
-    // start
     if (!fs.existsSync('./img/' + options.filename)) {
       console.log('Something went wrong... Try again');
       process.exit();
     }
-    //end
     addImageWatermarkToImage('./img/' + options.inputImage, './img/' + prepareOutputFilename(options.inputImage), './img/' + options.watermarkImage);
   }
 
